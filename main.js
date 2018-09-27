@@ -26,15 +26,15 @@ function main(){
         splashScreen = buildDom(`
             <main>
                 <h1>buildHangMan(startGame){</h1>
-                <div class="input">
+                <div class='input'>
                 <h2>if (player === 2 || < 2){</h2>
-                    <input class="splashInput" placeholder="type a single word" pattern="a-zA-Z" title="Input only A to Z characters" required/>
-                    <button class="splashInputButtn">Go!</button>
-                    <p class="errormess"></p>
+                    <input class='splashInput' placeholder='type a single word' pattern='a-zA-Z' title='Input only A to Z characters' required/>
+                    <button class='splashInputButtn'>Go!</button>
+                    <p class='errormess'></p>
                 <h2>}</h2>
                 <h2>else if (player === 1){</h2>
                 </div>
-                <button class="randomizeWord">Randomize!</button>
+                <button class='randomizeWord'>Randomize!</button>
                 <h2></h2>
                 <h1>}</h1>
             </main>
@@ -42,10 +42,10 @@ function main(){
 
         document.body.appendChild(splashScreen);
         
-        splashInput = document.querySelector(".splashInput");
-        splashInputButtn = document.querySelector(".splashInputButtn");
-        randomButton = document.querySelector(".randomizeWord");
-        errorMessaje = document.querySelector(".errormess")
+        splashInput = document.querySelector('.splashInput');
+        splashInputButtn = document.querySelector('.splashInputButtn');
+        randomButton = document.querySelector('.randomizeWord');
+        errorMessaje = document.querySelector('.errormess')
 
         splashInputButtn.addEventListener('click', startGame);
         randomButton.addEventListener('click', startGame);
@@ -60,7 +60,8 @@ function main(){
         }
         destroySplash();
 
-        game = new Game(currentWord);
+        gameScreen = new Game(currentWord);
+        gameScreen.start();
     }
 
     function destroySplash(){
