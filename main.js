@@ -28,7 +28,7 @@ function main(){
                 <h1>buildHangMan(startGame){</h1>
                 <div class='input'>
                 <h2>if (player === 2 || < 2){</h2>
-                    <input class='splashInput' placeholder='type a single word' pattern='a-zA-Z' title='Input only A to Z characters' required/>
+                    <input pattern='[A-Za-z]+' class='splashInput' placeholder='type a single word' autocomplete='off' />
                     <button class='splashInputButtn'>Go!</button>
                     <p class='errormess'></p>
                 <h2>}</h2>

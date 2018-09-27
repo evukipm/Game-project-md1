@@ -4,6 +4,7 @@ function Game(word){
     self.currentWord = word;
     self.lifes = ["'1'", " '2'", " '3'", " '4'", " '5'", " '6'", " '7'", " '8'"];
     self.letter;
+    self.letterDivs;
 }
 
 Game.prototype.start = function () {
@@ -17,7 +18,7 @@ Game.prototype.start = function () {
             <section class='game-screen'>
                 <div class='hang-image'></div>
                 <div class='big-input'>
-                <input class='input-letter' />
+                <input autocomplete='off' maxlength='1' pattern='[A-Za-z]' class='input-letter' />
                 </div>
             </section>
             <footer class='word-flex'></footer>
@@ -28,11 +29,15 @@ Game.prototype.start = function () {
 
     self.lifesArray = document.querySelector('.lifes-array');
     self.hangImage = document.querySelector('.hang-image');
-    self.letter = document.querySelector('.input-leter');
+    self.letter = document.querySelector('.input-letter');
     self.wordFlex = document.querySelector('.word-flex');
 
     self.lifesArray.innerText = 'var lifes = [' + self.lifes + ']';
-    self.letter.addEventListener('keypress', validateLetter);
+    self.letter.addEventListener('keypress', function(event){
+        if(event.key === 'Enter'){
+            self.validateLetter(self.letter.value);
+        }
+    });
 
     self.setLetters();
 }
@@ -44,18 +49,24 @@ Game.prototype.toArray = function (){
 }
 
 Game.prototype.setLetters = function (){
-    var self =this;
-
+    var self = this;
     self.currentWord.forEach(function(letter){
         var div = document.createElement('div');
         div.innerText = letter;
-        div.setAttribute('coincide', letter);
+        div.classList.add(letter);
         self.wordFlex.appendChild(div);
-
     });
+
+    self.letterDivs = self.wordFlex.querySelectorAll('div');
 }
 
-Game.prototype.validateLetter = function(){
-    var timeout= setTimeout
+Game.prototype.validateLetter = function(letter){
+    var self = this;
+
+    self.letterDivs.forEach(function(div){
+        if(letter === div.className){
+            div.classList.replace(div.className, "visible")
+        }
+    });
 
 }
