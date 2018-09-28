@@ -1,0 +1,45 @@
+
+/* ----- Game Screen ---- */
+.lifes-array{
+    padding:20px;
+    text-align:center;
+    font-size:3em;
+}
+.game-screen{
+    display:flex;
+    justify-content: space-between;
+}
+.hang-image{
+    padding:20px;
+    margin:20px;
+    background: black;
+    width:40%;
+}
+.input-letter{
+    padding:20px;
+    margin:20px; 
+}
+.input-letter input{
+    height:200px;
+    width:200px;
+}
+.word-flex{
+    display:flex;
+    justify-content: center;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding:20px;
+    text-transform: uppercase;
+}
+.word-flex div{
+    text-align:center;
+    min-width:70px;
+    margin:0 10px;
+    padding:10px;
+    border-bottom:3px solid black;
+    font-size:0px;
+}
+.word-flex .visible{
+    font-size:4em;
+}
