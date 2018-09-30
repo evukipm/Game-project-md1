@@ -1,7 +1,86 @@
+/* ----- Body ----- */
+body{
+    background:#1e1e1e;
+    color:#c5c8c6;
+}
+
+/* ----- Colors ---- */
+.orange{
+    color:#ce4f17;
+}
+.lilac{
+    color:#8872a2;
+}
+.blue{
+    color:#6089a5;
+}
+.gray{
+    color:#676867;
+}
+.red{
+    color:#bc2e24;
+}
+.green{
+    color:#9aa832;
+}
+.orange-container{
+    color:#ce4f17;
+    border-bottom:3px solid #ce4f17;
+}
+.lilac-container{
+    color:#8872a2;
+    border-bottom:3px solid #8872a2;
+}
+.blue-container{
+    color:#6089a5;
+    border-bottom:3px solid #6089a5;
+}
+.gray-container{
+    color:#676867;
+    border-bottom:3px solid #676867;
+}
+.red-container{
+    color:#bc2e24;
+    border-bottom:3px solid #bc2e24;
+}
+.green-container{
+    color:#9aa832;
+    border-bottom:3px solid #9aa832;
+}
+/* ----- Splash Screen ----- */
+#splash{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+#splash .container{
+    margin-left:50px;
+}
+#splash h1{
+    font-size:3.5em;
+}
+#splash h2{
+    font-size:2.5em;
+}
+
+#splash .container input, .container button{
+    background:#303030;
+    border:none;
+    padding:20px;
+    font-size:1.5em;
+    font-weight: bold;
+    text-transform:uppercase;
+}
+#splash .container input:focus, #splash .container button:focus{
+    outline:#303030;
+}
+#splash .container button{
+    cursor:pointer;
+}
 
 /* ----- Game Screen ---- */
 .lifes-array{
-    padding:20px;
+    padding:100px 20px 20px;
     text-align:center;
     font-size:3em;
 }
@@ -17,7 +96,7 @@
 }
 .game-screen{
     display:flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .hang-image{
     padding:20px;
@@ -37,7 +116,7 @@
     display:flex;
     justify-content: center;
     position:fixed;
-    bottom:0;
+    bottom:100px;
     width:100%;
     padding:20px;
     text-transform: uppercase;
@@ -47,7 +126,6 @@
     min-width:70px;
     margin:0 10px;
     padding:10px;
-    border-bottom:3px solid black;
     font-size:0px;
 }
 .word-flex .visible{

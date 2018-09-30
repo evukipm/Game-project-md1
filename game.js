@@ -1,12 +1,24 @@
 //Game constructor
-function Game(currentWord){
+function Game(word){
     var self = this;
 
-    //constructor game scopes
-    self.theWord = new Word(currentWord);
-    self.lifes = ["'1'",  " '2'", " '3'", " '4'", " '5'", " '6'", " '7'", " '8'"];
-    self.inputElement;
-    self.letterDivs;
+    self.theWord = new Word(word);
+    self.lifes = [
+        '<span class="green"> "1"</span>',
+        '<span class="green"> "2"</span>',
+        '<span class="green"> "3"</span>',
+        '<span class="green"> "4"</span>',
+        '<span class="green"> "5"</span>',
+        '<span class="green"> "6"</span>',
+        '<span class="green"> "7"</span>',
+        '<span class="green"> "8" </span>'    
+    ];
+    self.hangMan = [
+        '<span class="lilac">function</span> <span class="orange">HangMan</span>(){',
+    
+    ];
+    self.letterElement;
+    self.lifesArrayElement;
     self.finalResult;
     self.onGameOverCallback;
 }
@@ -15,91 +27,68 @@ function Game(currentWord){
 Game.prototype.start = function () {
     var self = this;
 
-    //takes the word and transforms in to array
+    //array the word with an a Word constructor prototype
     self.theWord.toArray(self.theWord.currentWord);
 
-    //builds the game DOM
     self.gameDOM = buildDom(`
         <main>
             <div class='lifes-array'></div>
-            <div class='letters-used'><span>Used: </span></div>
             <div class='game-screen'>
-                <div class='hang-image'></div>
+                <div class='hang-man'></div>
                 <input class='input-letter' autocomplete='off' maxlength='1' autofocus="autofocus" >
             </div>
             <div class='word-flex'></div>
         </main>
         `)
 
-    //place the DOM
     document.body.appendChild(self.gameDOM);
 
     //setup the elements
-    self.setupElements();
+    self.lifesArrayElement = document.querySelector('.lifes-array');
+    self.hangManElement = document.querySelector('.hang-man');
+    self.letterElement = document.querySelector('.input-letter');
+    
+    self.letterElement.focus();
+    self.lifesArrayElement.innerHTML = '<span class="lilac">var</span> <span class="blue">lifes</span> <span class="gray">=</span> [' + self.lifes + ']';
+    self.letterElement.addEventListener('keypress', function(event){
+        if(event.key === 'Enter'){
+            self.theWord.validateLetter(self.letterElement.value, self.lifesArrayElement);
+        }
+    });
 
-    //place the array of letters in word-flex div
+    //set letters with an a Word constructor prototype
     self.theWord.setLetters();
 }
 
-//Selectors and events in elements
-Game.prototype.setupElements = function(){
-    var self = this;
-
-    self.lifesArrayElement = document.querySelector('.lifes-array');
-    self.hangImageElement = document.querySelector('.hang-image');
-    self.inputElement = document.querySelector('.input-letter');
-    self.wordFlexElement = document.querySelector('.word-flex');
-    self.lettersUsedElement = document.querySelector('.letters-used')
-    
-    self.inputElement.focus();
-    self.inputElement.pattern = "[1-3]";
-
-    self.lifesArrayElement.innerText = 'var lifes = [' + self.lifes + ']';
-    self.inputElement.addEventListener('keypress', function(event){
-        if(event.key === 'Enter'){
-            self.theWord.validateLetter(self.inputElement.value);
-        }
-    });
-}
-
-//cheking the results
+//check the results for win or lose condition
 Game.prototype.checkResults = function(){
     var self = this;
 
-    //set correctLetters array to empty
     self.correctLetters = [];
-
-    //iterates in divs of word cheking if it's all in visible
     self.letterDivs.forEach(function(elem){
         if(elem.className === "visible"){
             self.correctLetters.push(elem);
         }
     });
 
-    //if it's all visible, you win! :)
-    if(self.correctLetters.length === self.currentWord.length){
+    if(self.lifes.length === 0 ){
+        self.finalResult = "lose";
+        self.onGameOverCallback(self.finalResult);
+    }
+    else if(self.correctLetters.length === self.theWord.currentWord.length){
         self.finalResult = "win";
         self.onGameOverCallback(self.finalResult);
     }
-
-    //but if you lose all lifes, you lose :(
-    else if(self.lifes.length === 0 ){
-        self.finalResult = "lose";
-        //self.onGameOverCallback(self.finalResult);
-        self.letterDivs.forEach(function(elem){
-        elem.classList.add('visible');
-        })
-    }
 }
 
-//Game over callback
+//callback of game over
 Game.prototype.onOver = function (callback) {
     var self = this;
   
     self.onGameOverCallback = callback;
 };
   
-//destroy game
+//destroy game screen
 Game.prototype.destroy = function () {
     var self = this;
     

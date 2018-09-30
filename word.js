@@ -2,6 +2,7 @@ function Word(word) {
     var self = this;
 
     self.currentWord = word;
+    self.letterDivs;
 }
 
 //splits the word introduced in splash
@@ -15,25 +16,26 @@ Word.prototype.toArray = function (word){
 Word.prototype.setLetters = function (){
     var self = this;
 
+    //selecting the container of the letters
+    self.wordFlexElement = document.querySelector('.word-flex');
+
     //iterates for make one div per letter
     //also, it adds a class in every div with the letter asigned in it
     self.currentWord.forEach(function(letter){
         var div = document.createElement('div');
         div.innerText = letter;
-        div.classList.add(letter);
-        Game.self.wordFlexElement.appendChild(div);
+        div.classList.add(letter, randomColor[Math.floor(Math.random()*randomColor.length)]);
+        self.wordFlexElement.appendChild(div);
     });
 
     //select all divs and save it in a node
     self.letterDivs = self.wordFlexElement.querySelectorAll('div');
 }
 
-//function to check the letter introduced with the word
-Word.prototype.validateLetter = function(letter){
+//iterates in divs of word searching for matches
+Word.prototype.validateLetter = function(letter, lifes){
     var self = this;
     var winValue = false;
-
-    //iterates in divs of word searching for matches
 
     //if it match, make the letter visible with a class
     self.letterDivs.forEach(function(div){
@@ -46,14 +48,10 @@ Word.prototype.validateLetter = function(letter){
     //if it does not match, you lose one life
     //also, it creates a div in "used words" container
     if(winValue === false){
-        self.lifes.pop();
-        self.lifesArrayElement.innerText = 'var lifes = [' + self.lifes + ']';
-
-        var div = document.createElement('div');
-        div.innerText = letter;
-        self.lettersUsedElement.appendChild(div);
+        lifes.pop();
+        lifes.innerHTML = '<span class="lilac">var</span> <span class="blue">lifes</span> <span class="gray">=</span> [' + self.lifes + ']';
     }
-
+    
     //check the total
     self.checkResults();
 
