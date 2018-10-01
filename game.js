@@ -11,16 +11,30 @@ function Game(word){
         '<i class="fas fa-heart"></i>',
         '<i class="fas fa-heart"></i>',
         '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
     ];
     self.hangMan = [
-        '<span class="lilac">function</span> <span class="orange">HangMan</span>(){',
-    
+        '<img src="images/hangman1.png">',
+        '<img src="images/hangman2.png">',
+        '<img src="images/hangman3.png">',
+        '<img src="images/hangman4.png">',
+        '<img src="images/hangman5.png">',
+        '<img src="images/hangman6.png">',
+        '<img src="images/hangman7.png">',
+        '<img src="images/hangman8.png">',
+        '<img src="images/hangman9.png">',
+        '<img src="images/hangman10.png">',
     ];
+
     self.inputElement;
     self.lifesArrayElement;
     self.letterDivs;
     self.finalResult;
     self.usedLetters;
+    self.failedLetters = [];
+    self.hangmanCount = 0;
     self.onGameOverCallback;
 }
 
@@ -39,7 +53,7 @@ Game.prototype.start = function () {
                 <input class="input-letter" autocomplete="off" maxlength="1" autofocus="autofocus" type="text" pattern="[A-Za-z]" />
             </div>
             <div class="game-screen">
-                <div class="hang-man"><canvas></canvas></div>
+                <div class="hang-man"></div>
                 <div class="word-flex"></div>
             </div>
         </main>
@@ -64,6 +78,7 @@ Game.prototype.setupElements = function(){
     self.usedLetters = document.querySelector('.letters-used')
 
     self.inputElement.focus();
+    self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
     self.lifesArrayElement.innerHTML = self.lifes.join(' ');
     self.inputElement.addEventListener('keypress', function(event){
         if(event.key === 'Enter'){
@@ -90,21 +105,26 @@ Game.prototype.validateLetter = function(letter){
     //if it does not match, you lose one life
     //also, it creates a div in "used words" container
     if(winValue === false){
-        debugger
+
         //but first we have to check if you used before
-        self.usedLetters = self.usedLetters.querySelectorAll('span');
         var letterInUse = false;
 
-        self.usedLetters.forEach(function(elem){
-            if(elem.className === letter){
+        self.failedLetters.find(function(elem){
+            if(elem === letter){
                 letterInUse = true;
-            }else{
-                letterInUse = false;
             }
         });
 
-        if(letterInUse = false){
-            self.fail(letter);
+        
+        if(letterInUse === false){
+            self.hangmanCount ++
+            self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
+
+            self.lifes.pop();
+            self.lifesArrayElement.innerHTML = self.lifes.join(' ');
+            self.failedLetters.push(letter);
+            self.usedLetters.innerHTML = self.failedLetters.join(' ');
+        
         }
     }
     
@@ -113,16 +133,6 @@ Game.prototype.validateLetter = function(letter){
 
     //clear the input
     self.inputElement.value = "";
-}
-
-//creates a used letter
-Game.prototype.fail = function(letter){
-    var span = document.createElement('span');
-    span.innerText = letter;
-    span.classList.add(letter);
-    self.usedLetters.appendChild(span);
-    self.lifes.pop();
-    self.lifesArrayElement.innerHTML = self.lifes.join(' ');
 }
 
 //check the results for win or lose condition
