@@ -4,17 +4,7 @@ function Game(word){
 
 
     self.theWord = new Word(word);
-    self.lifes = [
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-        '<i class="fas fa-heart"></i>',
-    ];
+
     self.hangMan = [
         '<img src="images/hangman1.png">',
         '<img src="images/hangman2.png">',
@@ -29,7 +19,6 @@ function Game(word){
     ];
 
     self.inputElement;
-    self.lifesArrayElement;
     self.letterDivs;
     self.finalResult;
     self.usedLetters;
@@ -48,7 +37,6 @@ Game.prototype.start = function () {
     self.gameDOM = buildDom(`
         <main id="game">
             <div class="container">
-                    <div class="lifes-array red"></div>
                     <div class="letters-used"></div>
                 <input class="input-letter" autocomplete="off" maxlength="1" autofocus="autofocus" type="text" pattern="[A-Za-z]" />
             </div>
@@ -72,14 +60,12 @@ Game.prototype.start = function () {
 Game.prototype.setupElements = function(){
     var self = this;
     
-    self.lifesArrayElement = document.querySelector('.lifes-array');
     self.hangManElement = document.querySelector('.hang-man');
     self.inputElement = document.querySelector('.input-letter');
     self.usedLetters = document.querySelector('.letters-used')
 
     self.inputElement.focus();
     self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
-    self.lifesArrayElement.innerHTML = self.lifes.join(' ');
     self.inputElement.addEventListener('keypress', function(event){
         if(event.key === 'Enter'){
             if(self.inputElement.validity.valid){
@@ -120,11 +106,8 @@ Game.prototype.validateLetter = function(letter){
             self.hangmanCount ++
             self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
 
-            self.lifes.pop();
-            self.lifesArrayElement.innerHTML = self.lifes.join(' ');
             self.failedLetters.push(letter);
-            self.usedLetters.innerHTML = self.failedLetters.join(' ');
-        
+            self.usedLetters.innerHTML = self.failedLetters.join(' ');    
         }
     }
     
@@ -146,7 +129,7 @@ Game.prototype.checkResults = function(){
         }
     });
 
-    if(self.lifes.length === 0 ){
+    if(self.hangmanCount === 9){
         self.finalResult = "lose";
         self.onGameOverCallback(self.finalResult);
     }
