@@ -2,24 +2,25 @@
 function Game(word){
     var self = this;
 
+
     self.theWord = new Word(word);
     self.lifes = [
-        '<span class="green"> "1"</span>',
-        '<span class="green"> "2"</span>',
-        '<span class="green"> "3"</span>',
-        '<span class="green"> "4"</span>',
-        '<span class="green"> "5"</span>',
-        '<span class="green"> "6"</span>',
-        '<span class="green"> "7"</span>',
-        '<span class="green"> "8" </span>'    
+        '<img src="images/corazon.jpg">',
+        '<img src="images/corazon.jpg">',
+        '<img src="images/corazon.jpg">',
+        '<img src="images/corazon.jpg">',
+        '<img src="images/corazon.jpg">',
+        '<img src="images/corazon.jpg">',
     ];
     self.hangMan = [
         '<span class="lilac">function</span> <span class="orange">HangMan</span>(){',
     
     ];
-    self.letterElement;
+    self.inputElement;
     self.lifesArrayElement;
+    self.letterDivs;
     self.finalResult;
+    self.usedLetters;
     self.onGameOverCallback;
 }
 
@@ -32,32 +33,74 @@ Game.prototype.start = function () {
 
     self.gameDOM = buildDom(`
         <main>
-            <div class='lifes-array'></div>
-            <div class='game-screen'>
-                <div class='hang-man'></div>
-                <input class='input-letter' autocomplete='off' maxlength='1' autofocus="autofocus" >
+            <div class="lifes-array red"></div>
+            <div class="letters-used"><span class="blue">usedLetters</span> <span class="gray">=</span></div>
+            <div class="game-screen">
+                <div class="hang-man"><canvas></canvas></div>
+                <input class="input-letter" autocomplete="off" maxlength="1" autofocus="autofocus" type="text" pattern="[A-Za-z]" />
             </div>
-            <div class='word-flex'></div>
+            <div class="word-flex"></div>
         </main>
         `)
 
     document.body.appendChild(self.gameDOM);
 
     //setup the elements
-    self.lifesArrayElement = document.querySelector('.lifes-array');
-    self.hangManElement = document.querySelector('.hang-man');
-    self.letterElement = document.querySelector('.input-letter');
-    
-    self.letterElement.focus();
-    self.lifesArrayElement.innerHTML = '<span class="lilac">var</span> <span class="blue">lifes</span> <span class="gray">=</span> [' + self.lifes + ']';
-    self.letterElement.addEventListener('keypress', function(event){
-        if(event.key === 'Enter'){
-            self.theWord.validateLetter(self.letterElement.value, self.lifesArrayElement);
-        }
-    });
+    self.setupElements();
 
     //set letters with an a Word constructor prototype
     self.theWord.setLetters();
+}
+
+//setup the elements
+Game.prototype.setupElements = function(){
+    var self = this;
+    
+    self.lifesArrayElement = document.querySelector('.lifes-array');
+    self.hangManElement = document.querySelector('.hang-man');
+    self.inputElement = document.querySelector('.input-letter');
+    self.usedLetters = document.querySelector('.letters-used')
+
+    self.inputElement.focus();
+    self.lifesArrayElement.innerHTML = self.lifes.join(' ');
+    self.inputElement.addEventListener('keypress', function(event){
+        if(event.key === 'Enter'){
+            if(self.inputElement.validity.valid){
+            self.validateLetter(self.inputElement.value);
+            }
+        }
+    });
+    
+}
+
+//iterates in divs of word searching for matches
+Game.prototype.validateLetter = function(letter){
+    var self = this;
+    var winValue = false;
+
+    //if it match, make the letter visible with a class
+    self.theWord.letterDivs.forEach(function(div){
+        if(letter === div.className){
+            div.classList.replace(div.className, "visible")
+            winValue = true;
+        }
+    });
+
+    //if it does not match, you lose one life
+    //also, it creates a div in "used words" container
+    if(winValue === false){
+        var span = document.createElement('span');
+        span.innerText = letter;
+        self.usedLetters.appendChild(span);
+        self.lifes.pop();
+        self.lifesArrayElement.innerHTML = self.lifes.join(' ');
+    }
+    
+    //check the total
+    self.checkResults();
+
+    //clear the input
+    self.inputElement.value = "";
 }
 
 //check the results for win or lose condition
@@ -65,7 +108,7 @@ Game.prototype.checkResults = function(){
     var self = this;
 
     self.correctLetters = [];
-    self.letterDivs.forEach(function(elem){
+    self.theWord.letterDivs.forEach(function(elem){
         if(elem.className === "visible"){
             self.correctLetters.push(elem);
         }
@@ -84,7 +127,7 @@ Game.prototype.checkResults = function(){
 //callback of game over
 Game.prototype.onOver = function (callback) {
     var self = this;
-  
+    
     self.onGameOverCallback = callback;
 };
   

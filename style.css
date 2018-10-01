@@ -1,6 +1,7 @@
 /* ----- Body ----- */
 body{
-    background:#1e1e1e;
+    background-color:#1e1e1e;
+    background-image: url("https://www.transparenttextures.com/patterns/otis-redding.png");
     color:#c5c8c6;
 }
 
@@ -23,29 +24,36 @@ body{
 .green{
     color:#9aa832;
 }
-.orange-container{
+.yellow{
+    color:#eef442;
+}
+#orange-container{
     color:#ce4f17;
     border-bottom:3px solid #ce4f17;
 }
-.lilac-container{
+#lilac-container{
     color:#8872a2;
     border-bottom:3px solid #8872a2;
 }
-.blue-container{
+#blue-container{
     color:#6089a5;
     border-bottom:3px solid #6089a5;
 }
-.gray-container{
+#gray-container{
     color:#676867;
     border-bottom:3px solid #676867;
 }
-.red-container{
+#red-container{
     color:#bc2e24;
     border-bottom:3px solid #bc2e24;
 }
-.green-container{
+#green-container{
     color:#9aa832;
     border-bottom:3px solid #9aa832;
+}
+#yellow-container{
+    color:#eef442;
+    border-bottom:3px solid #eef442;
 }
 /* ----- Splash Screen ----- */
 #splash{
@@ -65,11 +73,14 @@ body{
 
 #splash .container input, .container button{
     background:#303030;
-    border:none;
+    border:1px solid #303030;
     padding:20px;
     font-size:1.5em;
     font-weight: bold;
     text-transform:uppercase;
+}
+#splash .container input:invalid{
+    border:1px solid red;
 }
 #splash .container input:focus, #splash .container button:focus{
     outline:#303030;
@@ -80,7 +91,7 @@ body{
 
 /* ----- Game Screen ---- */
 .lifes-array{
-    padding:100px 20px 20px;
+    padding:50px 20px 20px;
     text-align:center;
     font-size:3em;
 }
@@ -98,27 +109,38 @@ body{
     display:flex;
     justify-content: space-around;
 }
-.hang-image{
+.hang-man canvas{
     padding:20px;
     margin:20px;
     background: black;
-    width:40%;
+    width:200px;
+    height:200px;
 }
+
 .input-letter{
     padding:20px;
-    margin:20px; 
-}
-.input-letter input{
+    margin:20px;
     height:200px;
     width:200px;
+    font-size:100px;
+    text-align:center;
+    text-transform:uppercase;
+    background:#303030;
+    border:1px solid #303030;
+    color:#9aa832;
+}
+.input-letter:focus{
+    outline: #330033;
+}
+.input-letter:invalid{
+    border:1px solid red;
 }
 .word-flex{
     display:flex;
     justify-content: center;
     position:fixed;
-    bottom:100px;
+    bottom:50px;
     width:100%;
-    padding:20px;
     text-transform: uppercase;
 }
 .word-flex div{
@@ -129,5 +151,5 @@ body{
     font-size:0px;
 }
 .word-flex .visible{
-    font-size:4em;
+    font-size:3em;
 }

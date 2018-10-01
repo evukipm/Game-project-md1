@@ -14,7 +14,6 @@ function main(){
     var finalScreen; //GameOver lose screen
     
     var splashInput; //input del splash
-    var splashInputButtn; // botón del input del splash
     var randomButton // botón random del splash
     var currentWord;
     var restartButton;
@@ -29,12 +28,13 @@ function main(){
                     <div class="container">
                         <div class="input">
                         <h2><span class="lilac">if</span> ( <span class="blue">players</span> <span class="gray">===</span> <span class="blue">2</span> <span class="gray">||</span> <span class="blue">players</span> <span class="gray">></span> <span class="blue">2</span> ){</h2>
-                            <input class="splashInput red" autofocus="autofocus" placeholder="type a single word" autocomplete="off" />
-                            <button class="splashInputButtn blue">Go!</button>
+                            <form>
+                            <input class="splash-input red" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,50}" />
+                            </form>
                         <h2>}</h2>
                         <h2><span class="lilac">else if</span> ( <span class="blue">players</span> <span class="gray">===</span> <span class="blue">1</span> ){</h2>
                         </div>
-                        <button class="randomizeWord blue">Randomize!</button>
+                        <button class="randomize-word blue">Randomize!</button>
                         <h2>}</h2>
                     </div>
                     <h1>}</h1>
@@ -44,16 +44,17 @@ function main(){
 
         document.body.appendChild(splashScreen);
 
-        splashInput = document.querySelector('.splashInput');
-        splashInputButtn = document.querySelector('.splashInputButtn');
-        randomButton = document.querySelector('.randomizeWord');
+        splashInput = document.querySelector('.splash-input');
+        randomButton = document.querySelector('.randomize-word');
     
-        splashInputButtn.addEventListener('click', startGame);
         splashInput.addEventListener('keypress', function(event){
             if(event.key === 'Enter'){
-                startGame(splashInput.value);
+                if(splashInput.validity.valid){
+                    startGame(splashInput.value);
+                }
             }
         });
+
         randomButton.addEventListener('click', startGame);
         
     }    
@@ -62,9 +63,11 @@ function main(){
 
     function startGame(){
         currentWord = splashInput.value
-        if(!splashInput.value){
-            currentWord = randomWord[Math.floor(Math.random()*randomWord.length)]
+
+        if(!currentWord){
+            currentWord =  randomWord[Math.floor(Math.random()*randomWord.length)];
         }
+
         destroySplash();
 
         gameScreen = new Game(currentWord);
@@ -74,8 +77,8 @@ function main(){
     }
 
     function destroySplash(){
-        splashInputButtn.removeEventListener('click', startGame);
         randomButton.removeEventListener('click', startGame);
+
         splashScreen.remove();
     }
 
@@ -91,7 +94,7 @@ function main(){
     function buildGameOver(result){
         if(result === "lose"){
             finalScreen = buildDom(`
-            <main>
+            <main id="game-over">
                 <h1>Sorry</h1>
                 <button class="restart-button">Play again!</button>
             </main>
@@ -99,7 +102,7 @@ function main(){
         }
         if(result === "win"){
             finalScreen = buildDom(`
-            <main>
+            <main id="game-over">
                 <h1>Congrats</h1>
                 <button class="restart-button">Play again!</button>
             </main>
@@ -110,7 +113,14 @@ function main(){
 
         restartButton = document.querySelector('.restart-button');
 
-        restartButton.addEventListener('click', restartGame)
+        restartButton.focus();
+
+        restartButton.addEventListener('click', restartGame);
+        restartButton.addEventListener('keypress', function(event){
+            if(event.key === 'Enter'){
+                restartGame();
+            }
+        });
     }
 
     function restartGame(){
