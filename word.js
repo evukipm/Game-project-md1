@@ -23,12 +23,14 @@ Word.prototype.setLetters = function (){
     //also, it adds a class in every div with the letter asigned in it
     self.currentWord.forEach(function(letter){
         var div = document.createElement('div');
-        div.innerText = letter;
+        var span = document.createElement('span');
+        span.innerText = letter;
         div.setAttribute("id", randomColor[Math.floor(Math.random()*randomColor.length)]);
-        div.classList.add(letter);
+        span.classList.add(letter);
         self.wordFlexElement.appendChild(div);
+        div.appendChild(span);
     });
 
     //select all divs and save it in a node
-    self.letterDivs = self.wordFlexElement.querySelectorAll('div');
+    self.letterDivs = self.wordFlexElement.querySelectorAll('span');
 }

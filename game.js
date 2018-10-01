@@ -5,12 +5,12 @@ function Game(word){
 
     self.theWord = new Word(word);
     self.lifes = [
-        '<img src="images/corazon.jpg">',
-        '<img src="images/corazon.jpg">',
-        '<img src="images/corazon.jpg">',
-        '<img src="images/corazon.jpg">',
-        '<img src="images/corazon.jpg">',
-        '<img src="images/corazon.jpg">',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
+        '<i class="fas fa-heart"></i>',
     ];
     self.hangMan = [
         '<span class="lilac">function</span> <span class="orange">HangMan</span>(){',
@@ -32,14 +32,16 @@ Game.prototype.start = function () {
     self.theWord.toArray(self.theWord.currentWord);
 
     self.gameDOM = buildDom(`
-        <main>
-            <div class="lifes-array red"></div>
-            <div class="letters-used"><span class="blue">usedLetters</span> <span class="gray">=</span></div>
-            <div class="game-screen">
-                <div class="hang-man"><canvas></canvas></div>
+        <main id="game">
+            <div class="container">
+                    <div class="lifes-array red"></div>
+                    <div class="letters-used"></div>
                 <input class="input-letter" autocomplete="off" maxlength="1" autofocus="autofocus" type="text" pattern="[A-Za-z]" />
             </div>
-            <div class="word-flex"></div>
+            <div class="game-screen">
+                <div class="hang-man"><canvas></canvas></div>
+                <div class="word-flex"></div>
+            </div>
         </main>
         `)
 
@@ -70,7 +72,6 @@ Game.prototype.setupElements = function(){
             }
         }
     });
-    
 }
 
 //iterates in divs of word searching for matches
@@ -89,11 +90,22 @@ Game.prototype.validateLetter = function(letter){
     //if it does not match, you lose one life
     //also, it creates a div in "used words" container
     if(winValue === false){
-        var span = document.createElement('span');
-        span.innerText = letter;
-        self.usedLetters.appendChild(span);
-        self.lifes.pop();
-        self.lifesArrayElement.innerHTML = self.lifes.join(' ');
+        debugger
+        //but first we have to check if you used before
+        self.usedLetters = self.usedLetters.querySelectorAll('span');
+        var letterInUse = false;
+
+        self.usedLetters.forEach(function(elem){
+            if(elem.className === letter){
+                letterInUse = true;
+            }else{
+                letterInUse = false;
+            }
+        });
+
+        if(letterInUse = false){
+            self.fail(letter);
+        }
     }
     
     //check the total
@@ -101,6 +113,16 @@ Game.prototype.validateLetter = function(letter){
 
     //clear the input
     self.inputElement.value = "";
+}
+
+//creates a used letter
+Game.prototype.fail = function(letter){
+    var span = document.createElement('span');
+    span.innerText = letter;
+    span.classList.add(letter);
+    self.usedLetters.appendChild(span);
+    self.lifes.pop();
+    self.lifesArrayElement.innerHTML = self.lifes.join(' ');
 }
 
 //check the results for win or lose condition

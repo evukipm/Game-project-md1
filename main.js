@@ -24,20 +24,16 @@ function main(){
         splashScreen = buildDom(`
             <main id="splash">
                 <div id="wrap">
-                    <h1><span class="lilac">function</span> <span class="orange">buildHangMan</span>(<span class="blue"> players </span>){</h1>
+                    <h1><span class="orange">buildHangMan</span></h1>
                     <div class="container">
                         <div class="input">
-                        <h2><span class="lilac">if</span> ( <span class="blue">players</span> <span class="gray">===</span> <span class="blue">2</span> <span class="gray">||</span> <span class="blue">players</span> <span class="gray">></span> <span class="blue">2</span> ){</h2>
                             <form>
-                            <input class="splash-input red" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,50}" />
+                            <input class="splash-input green" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,50}" />
                             </form>
-                        <h2>}</h2>
-                        <h2><span class="lilac">else if</span> ( <span class="blue">players</span> <span class="gray">===</span> <span class="blue">1</span> ){</h2>
                         </div>
+                        <h2>or</h2>
                         <button class="randomize-word blue">Randomize!</button>
-                        <h2>}</h2>
                     </div>
-                    <h1>}</h1>
                 </div>
             </main>
         `);
