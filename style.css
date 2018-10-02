@@ -3,9 +3,11 @@
 /* ----- Body ----- */
 body{
     background-color:#1e1e1e;
-    background-image: url("https://www.transparenttextures.com/patterns/otis-redding.png");
     color:#c5c8c6;
     font-family: 'Cabin Sketch';
+    background-image:url("images/background.jpg");
+    background-size:cover;
+    background-attachment: fixed;
 }
 
 /* ----- Colors ---- */
@@ -154,6 +156,22 @@ body{
 #game .word-flex .visible{
     font-size:80px;
     transition:1s;
+}
+#game .clue-button{
+    font-size:20px;
+    background:none;
+    border:none;
+    width:80px;
+    height: 80px;
+    text-align:center;
+    box-shadow:2px 2px 2px black;
+    position:fixed;
+    bottom:30px;
+    right: 30px;
+    color: #c5c8c6;
+}
+#game .clue-button:focus{
+    outline:none;
 }
 
 /* ----- Game Over ---- */

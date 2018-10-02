@@ -1,15 +1,23 @@
-function Word(word) {
+function Word(word, itsRandom) {
     var self = this;
 
     self.currentWord = word;
     self.letterDivs;
+    self.itsRandom = itsRandom;
+    self.clue;
 }
 
 //splits the word introduced in splash
 Word.prototype.toArray = function (word){
     var self = this;
 
+    console.log(self.itsRandom);
+    if(self.itsRandom){
+        self.clue = word.clue;
+        self.currentWord = word.word.split('');
+    }else{
     self.currentWord = word.split('');
+    }
 }
 
 //creates de div letters in the DOM

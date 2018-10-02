@@ -1,8 +1,17 @@
 var randomWord = [
-    "months", 
-    "position", 
-    "expected"
-]
+    {
+        word: "word",
+        clue: "I'm a clue"
+    },
+    {
+        word: "word",
+        clue: "I'm a clue"
+    },
+    {
+        word: "word",
+        clue: "I'm a clue"
+    }
+];
 
 var randomColor =[
     "orange-container",

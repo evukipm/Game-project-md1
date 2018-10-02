@@ -1,9 +1,8 @@
 //Game constructor
-function Game(word){
+function Game(word, itsRandom){
     var self = this;
 
-
-    self.theWord = new Word(word);
+    self.theWord = new Word(word, itsRandom);
 
     self.hangMan = [
         '<img src="images/hangman1.png">',
@@ -18,8 +17,12 @@ function Game(word){
         '<img src="images/hangman10.png">',
     ];
 
+    //elements
     self.inputElement;
     self.letterDivs;
+    self.clue;
+
+    //counters
     self.finalResult;
     self.usedLetters;
     self.failedLetters = [];
@@ -42,8 +45,12 @@ Game.prototype.start = function () {
             </div>
             <div class="game-screen">
                 <div class="hang-man"></div>
+                <div class="word">
                 <div class="word-flex"></div>
+                <p class="clue"></p>
+                </div>
             </div>
+            <button class="clue-button">Clue!</button>
         </main>
         `)
 
@@ -62,7 +69,8 @@ Game.prototype.setupElements = function(){
     
     self.hangManElement = document.querySelector('.hang-man');
     self.inputElement = document.querySelector('.input-letter');
-    self.usedLetters = document.querySelector('.letters-used')
+    self.usedLetters = document.querySelector('.letters-used');
+    self.clue = document.querySelector(".clue");
 
     self.inputElement.focus();
     self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];

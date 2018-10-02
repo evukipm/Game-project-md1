@@ -16,6 +16,7 @@ function main(){
     var splashInput; //input del splash
     var randomButton // botón random del splash
     var currentWord;
+    var itsRandom = false;
     var restartButton;
     
     //construcción del splash
@@ -71,11 +72,12 @@ function main(){
 
         if(!currentWord){
             currentWord =  randomWord[Math.floor(Math.random()*randomWord.length)];
+            itsRandom = true;
         }
 
         destroySplash();
 
-        gameScreen = new Game(currentWord);
+        gameScreen = new Game(currentWord, itsRandom);
         gameScreen.start();
         gameScreen.onOver(gameOver);
         
