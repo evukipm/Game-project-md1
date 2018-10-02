@@ -2,7 +2,10 @@
 function Game(word, itsRandom){
     var self = this;
 
+    //atributes
     self.theWord = new Word(word, itsRandom);
+    self.itsRandom = itsRandom;
+    self.word = word;
 
     self.hangMan = [
         '<img src="images/hangman1.png">',
@@ -20,7 +23,7 @@ function Game(word, itsRandom){
     //elements
     self.inputElement;
     self.letterDivs;
-    self.clue;
+    self.clueElement;
 
     //counters
     self.finalResult;
@@ -50,7 +53,7 @@ Game.prototype.start = function () {
                 <p class="clue"></p>
                 </div>
             </div>
-            <button class="clue-button">Clue!</button>
+            <button class="clue-button red">Clue!</button>
         </main>
         `)
 
@@ -70,7 +73,15 @@ Game.prototype.setupElements = function(){
     self.hangManElement = document.querySelector('.hang-man');
     self.inputElement = document.querySelector('.input-letter');
     self.usedLetters = document.querySelector('.letters-used');
-    self.clue = document.querySelector(".clue");
+    self.clueElement = document.querySelector(".clue");
+    self.clueButtonElement = document.querySelector(".clue-button");
+
+    if(self.itsRandom){
+        self.clueButtonElement.style.display = "inline";
+        self.clueButtonElement.addEventListener('click', function(){
+            self.displayClue();
+        });
+    }
 
     self.inputElement.focus();
     self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
@@ -87,6 +98,13 @@ Game.prototype.setupElements = function(){
             }
         }
     });
+}
+
+//display clue if it's random
+Game.prototype.displayClue = function(){
+    var self = this;
+
+    self.clueElement.innerText = self.word.clue;
 }
 
 //iterates in divs of word searching for matches
@@ -163,7 +181,7 @@ Game.prototype.checkResults = function(){
         
         window.setTimeout(function (){
             self.onGameOverCallback(self.finalResult);  
-        }, 5000)
+        }, 3000)
     }
     else if(self.correctLetters.length === self.theWord.currentWord.length){
         self.finalResult = "win";
