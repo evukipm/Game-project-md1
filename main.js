@@ -28,8 +28,9 @@ function main(){
                     <div class="container">
                         <div class="input">
                             <form>
-                            <input class="splash-input green" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,50}" />
+                            <input class="splash-input green" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,9}" />
                             </form>
+                            <p>Input a word between 3 and 9 characters and press enter</p>
                         </div>
                         <h2>or</h2>
                         <button class="randomize-word blue">Randomize!</button>
@@ -42,11 +43,19 @@ function main(){
 
         splashInput = document.querySelector('.splash-input');
         randomButton = document.querySelector('.randomize-word');
+
+        splashInput.focus();
     
         splashInput.addEventListener('keypress', function(event){
             if(event.key === 'Enter'){
                 if(splashInput.validity.valid){
                     startGame(splashInput.value);
+                }else{
+                    splashInput.classList.add("apply-shake");
+
+                    window.setTimeout(function(){
+                        splashInput.classList.remove("apply-shake");
+                    }, 1000)
                 }
             }
         });
@@ -91,16 +100,19 @@ function main(){
         if(result === "lose"){
             finalScreen = buildDom(`
             <main id="game-over">
-                <h1>Sorry</h1>
-                <button class="restart-button">Play again!</button>
+                <h1 class="red">Sorry</h1>
+                <div class="dino-lose">
+                <img src="images/trexlose.png">
+                </div>
+                <button class="restart-button blue">Play again!</button>
             </main>
             `);
         }
         if(result === "win"){
             finalScreen = buildDom(`
             <main id="game-over">
-                <h1>Congrats</h1>
-                <button class="restart-button">Play again!</button>
+                <h1 class="green">Congrats</h1>
+                <button class="restart-button blue">Play again!</button>
             </main>
             `);
         }

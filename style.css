@@ -1,3 +1,5 @@
+
+
 /* ----- Body ----- */
 body{
     background-color:#1e1e1e;
@@ -153,3 +155,50 @@ body{
     font-size:80px;
     transition:1s;
 }
+
+/* ----- Game Over ---- */
+#game-over{
+    text-align:center;
+    margin-top:100px;
+}
+#game-over h1{
+    font-size:3.5em;
+}
+#game-over button{
+    background:#303030;
+    border:1px solid #303030;
+    padding:20px;
+    font-size:1.5em;
+    font-weight: bold;
+    text-transform:uppercase;
+}
+#game-over button:focus{
+    outline:#303030;
+}
+#game-over .dino-lose{
+    margin:20px 0;
+}
+
+/* ----- Shake ----- */
+/* Standard syntax */
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+  
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+  
+.apply-shake {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+ }

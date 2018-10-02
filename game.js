@@ -70,6 +70,12 @@ Game.prototype.setupElements = function(){
         if(event.key === 'Enter'){
             if(self.inputElement.validity.valid){
             self.validateLetter(self.inputElement.value);
+            }else{
+                self.inputElement.classList.add("apply-shake");
+
+                window.setTimeout(function(){
+                    self.inputElement.classList.remove("apply-shake");
+                }, 1000)
             }
         }
     });
@@ -98,16 +104,25 @@ Game.prototype.validateLetter = function(letter){
         self.failedLetters.find(function(elem){
             if(elem === letter){
                 letterInUse = true;
+                self.inputElement.classList.add("apply-shake");
+    
+                window.setTimeout(function(){
+                    self.inputElement.classList.remove("apply-shake");
+                }, 1000)
             }
         });
 
         
         if(letterInUse === false){
-            self.hangmanCount ++
-            self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
+            window.setTimeout(function(){
+                self.hangmanCount ++
+                self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
+            }, 600);
 
-            self.failedLetters.push(letter);
-            self.usedLetters.innerHTML = self.failedLetters.join(' ');    
+            window.setTimeout(function(){
+                self.failedLetters.push(letter);
+                self.usedLetters.innerHTML = self.failedLetters.join(' '); 
+            }, 300); 
         }
     }
     
@@ -129,9 +144,18 @@ Game.prototype.checkResults = function(){
         }
     });
 
-    if(self.hangmanCount === 9){
+    if(self.hangmanCount === 8){
         self.finalResult = "lose";
-        self.onGameOverCallback(self.finalResult);
+
+        self.theWord.letterDivs.forEach(function(elem){
+            window.setTimeout(function(){
+                elem.classList.add("visible");
+            }, 500)            
+        });
+        
+        window.setTimeout(function (){
+            self.onGameOverCallback(self.finalResult);  
+        }, 5000)
     }
     else if(self.correctLetters.length === self.theWord.currentWord.length){
         self.finalResult = "win";
