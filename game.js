@@ -24,12 +24,16 @@ function Game(word, itsRandom){
     self.inputElement;
     self.letterDivs;
     self.clueElement;
+    self.timeElement;
 
     //counters
-    self.finalResult;
+    self.finalResult = "lose";
     self.usedLetters;
+    self.timeCounter = 15;
     self.failedLetters = [];
     self.hangmanCount = 0;
+
+    //Callbacks
     self.onGameOverCallback;
 }
 
@@ -43,7 +47,8 @@ Game.prototype.start = function () {
     self.gameDOM = buildDom(`
         <main id="game">
             <div class="container">
-                    <div class="letters-used"></div>
+                <div class="letters-used"></div>
+                <div class="time-counter"></div>
                 <input class="input-letter" autocomplete="off" maxlength="1" autofocus="autofocus" type="text" pattern="[A-Za-z]" />
             </div>
             <div class="game-screen">
@@ -64,6 +69,9 @@ Game.prototype.start = function () {
 
     //set letters with an a Word constructor prototype
     self.theWord.setLetters();
+
+    //set the time
+    //self.setCounter(self.timeCounter);
 }
 
 //setup the elements
@@ -75,6 +83,7 @@ Game.prototype.setupElements = function(){
     self.usedLetters = document.querySelector('.letters-used');
     self.clueElement = document.querySelector(".clue");
     self.clueButtonElement = document.querySelector(".clue-button");
+    //self.timeElement = document.querySelector(".time-counter");
 
     if(self.itsRandom){
         self.clueButtonElement.style.display = "inline";
@@ -84,6 +93,7 @@ Game.prototype.setupElements = function(){
     }
 
     self.inputElement.focus();
+    //self.timeElement.innerText = self.timeCounter;
     self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
     self.inputElement.addEventListener('keypress', function(event){
         if(event.key === 'Enter'){
@@ -100,11 +110,39 @@ Game.prototype.setupElements = function(){
     });
 }
 
+//start the time counter
+Game.prototype.setCounter = function(time){
+    var self = this;
+
+    self.intervalId = setInterval(function(){
+        time--
+        self.timeElement.innerText = time;
+        if(!time){
+            self.onGameOverCallback(self.finalResult);
+        }
+    }, 1000);
+
+}
+Game.prototype.clearCounter = function(){
+    var self = this;
+    clearInterval(self.intervalId);
+}
+
 //display clue if it's random
 Game.prototype.displayClue = function(){
     var self = this;
 
     self.clueElement.innerText = self.word.clue;
+}
+
+//chalk sounds
+Game.prototype.chalkLine = function () {
+    self.lineSound = new Audio('sounds/line.mp3')
+       self.lineSound.play()
+}
+Game.prototype.chalkWord = function () {
+    self.chalk = new Audio('sounds/word.mp3')
+       self.chalk.play()
 }
 
 //iterates in divs of word searching for matches
@@ -117,6 +155,9 @@ Game.prototype.validateLetter = function(letter){
         if(letter === div.className){
             div.classList.replace(div.className, "visible")
             winValue = true;
+            self.chalkWord();
+            //self.clearCounter();
+            //self.setCounter(self.timeCounter);
         }
     });
 
@@ -143,13 +184,17 @@ Game.prototype.validateLetter = function(letter){
             window.setTimeout(function(){
                 self.hangmanCount ++
                 self.hangManElement.innerHTML = self.hangMan[self.hangmanCount];
+                
+                self.chalkLine();
             }, 600);
 
             window.setTimeout(function(){
                 self.failedLetters.push(letter);
                 self.usedLetters.innerHTML = self.failedLetters.join(' '); 
-            }, 300); 
+            }, 300);
+            
         }
+        
     }
     
     //check the total
