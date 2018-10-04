@@ -28,7 +28,7 @@ I supose that's my canvas idea of a lot bouncing words in the screen.
 - Array with random words
 
 ## game.js
--game constructor
+- game constructor
 word:
 lifes:
 letter
@@ -99,16 +99,11 @@ Definition of the different states and their transition (transition functions)
 ## Links
 
 
-### Trello
-[Link url](https://trello.com)
-
-
 ### Git
 URls for the project repo and deploy
-[Link Repo](http://github.com)
-[Link Deploy](http://github.com)
+[Link Repo](https://github.com/evukipm/Game-project-md1), 
+[Link Deploy](https://evukipm.github.io/Game-project-md1)
 
 
 ### Slides
-URls for the project presentation (slides)
-[Link Slides.com](http://slides.com)
+[Link Slides.com](https://slides.com/evukipm/hangman#/)
