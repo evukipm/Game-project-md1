@@ -29,7 +29,7 @@ function main(){
                     <div class="container">
                         <div class="input">
                             <form>
-                            <input class="splash-input green" autofocus="autofocus" placeholder="type a single word" type="text"  pattern="[A-Za-z]{3,9}" />
+                            <input class="splash-input green" autofocus="autofocus" placeholder="type a single word" type="password"  pattern="[A-Za-z]{3,9}" />
                             </form>
                             <p>Input a word between 3 and 9 characters and press enter</p>
                         </div>
@@ -103,7 +103,7 @@ function main(){
             finalScreen = buildDom(`
             <main id="game-over">
                 <h1 class="red">Sorry</h1>
-                <div class="dino-lose">
+                <div class="dino-img">
                 <img src="images/trexlose.png">
                 </div>
                 <button class="restart-button blue">Play again!</button>
@@ -114,6 +114,9 @@ function main(){
             finalScreen = buildDom(`
             <main id="game-over">
                 <h1 class="green">Congrats</h1>
+                <div class="dino-img">
+                <img src="images/dinowin.png">
+                </div>
                 <button class="restart-button blue">Play again!</button>
             </main>
             `);

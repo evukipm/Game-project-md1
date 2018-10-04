@@ -197,7 +197,7 @@ body{
 #game-over button:focus{
     outline:#303030;
 }
-#game-over .dino-lose{
+#game-over .dino-img{
     margin:20px 0;
 }
 
