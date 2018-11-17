@@ -1,8 +1,8 @@
 # Project's name
-buildHangMan
+HangMan
 
 ## Description
-buildHangMan is the classic game of Hangman with a programmer touch. Player one introduce a word in the splash, and player two has to find it letter by letter. Every time you fail, te buildHangMan code makes a new line. If the code arrives to the last bracket, the function executes and you lose. 
+HangMan is the classic game of Hangman. Player one introduce a word in the splash, and player two has to find it letter by letter. Every time you fail, te HangMan draw a new line. If the Hangman arrives to the last line, you lose. 
 
 If you are an asocial and want to play alone (it's more fun with a friend and even more fun with an enemy) you can do it! Click the randomize button and the game wil choose a word for you.
 
